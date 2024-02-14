@@ -18,7 +18,7 @@ class _SigninpageState extends State<Signinpage> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
-  //sign user up method
+  //sign user up method(to be refined)
   void signUserUp() async {
     //show loading circle(thinking)
     //try signup
