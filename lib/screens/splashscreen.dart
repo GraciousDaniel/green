@@ -25,12 +25,14 @@ class _SplashscreenState extends State<Splashscreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // Replace 'assets/logo.png' with your actual logo asset path
-            //text test
-            const Text('green'),
-            Image.asset('lib/images/', height: 100.0),
-            const SizedBox(height: 20),
-            const CircularProgressIndicator(), //Show a loading indicator
+            Image.asset(
+              'lib/images/DALL·E 2024-02-15 14.49.53 - A simple and clear image of green leaves forming the shape of the Earth. The design should be straightforward and easy to understand, with the leaves .webp',
+               height: 300.0,
+               width: 200,
+               ),
+            //to show loading circle underneath it
+            //const SizedBox(height: 20),
+           // const CircularProgressIndicator(), //Show a loading indicator
           ],
         ),
       ),

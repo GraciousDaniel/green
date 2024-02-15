@@ -74,10 +74,15 @@ class _LoginpageState extends State<Loginpage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 50),
+                const SizedBox(height: 25),
                 //logo
+                Image.asset(
+                  'lib/images/DALL·E 2024-02-15 14.49.53 - A simple and clear image of green leaves forming the shape of the Earth. The design should be straightforward and easy to understand, with the leaves .webp',
+                  height: 100,
+                  width: 80,
+                  ),
             
-                const SizedBox(height: 50),
+                const SizedBox(height: 17),
             
                 //welcome text
                 const Text(
@@ -95,6 +100,8 @@ class _LoginpageState extends State<Loginpage> {
                   hintText: 'Email',
                   obscureText: false,
                 ),
+
+                const SizedBox(height: 10),
                    
                 //password textfield
                 MyTextfield(
@@ -157,10 +164,10 @@ class _LoginpageState extends State<Loginpage> {
                 ),
             
                 //google button
-               SquareTile(imagePath: 'lib/images/'),
+               const SquareTile(imagePath: 'lib/images/2048px-Google__G__logo.svg.png'),
             
                 //apple button
-                SquareTile(imagePath: 'lib/images/'),
+                const SquareTile(imagePath: 'lib/images/Apple-Logo.png'),
             
                 //okay register option
                 Row(
