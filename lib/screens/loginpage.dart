@@ -162,13 +162,22 @@ class _LoginpageState extends State<Loginpage> {
                     ],
                   ),
                 ),
+          
+               const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                 children: [
+                  //google button
+                   SquareTile(imagePath: 'lib/images/2048px-Google__G__logo.svg.png'),
+
+                   SizedBox(width: 20),
+
+                   //apple button
+                SquareTile(imagePath: 'lib/images/Apple-Logo.png'),
+                 ],
+               ),
             
-                //google button
-               const SquareTile(imagePath: 'lib/images/2048px-Google__G__logo.svg.png'),
-            
-                //apple button
-                const SquareTile(imagePath: 'lib/images/Apple-Logo.png'),
-            
+                const SizedBox(height: 15),
+                
                 //okay register option
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

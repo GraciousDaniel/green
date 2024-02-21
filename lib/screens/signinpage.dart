@@ -166,13 +166,23 @@ class _SigninpageState extends State<Signinpage> {
                     ],
                   ),
                 ),
+
+            const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                 children: [
+                  //google button
+                   SquareTile(imagePath: 'lib/images/2048px-Google__G__logo.svg.png'),
+
+                   SizedBox(width: 20),
+
+                   //apple button
+                SquareTile(imagePath: 'lib/images/Apple-Logo.png'),
+                 ],
+               ),
             
-                //google button
-               const SquareTile(imagePath: 'lib/images/2048px-Google__G__logo.svg.png'),
+                const SizedBox(height: 15),
             
-                //apple button
-                const SquareTile(imagePath: 'lib/images/Apple-Logo.png'),
-            
+
                 //okay register option
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
