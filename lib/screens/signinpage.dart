@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:green/components/imagessquaretile.dart';
 import 'package:green/components/mybuttons.dart';
 import 'package:green/components/mytextfields.dart';
+import 'package:green/services/auth_service.dart';
 
 class Signinpage extends StatefulWidget {
   final Function()? onTap;
@@ -167,16 +168,20 @@ class _SigninpageState extends State<Signinpage> {
                   ),
                 ),
 
-            const Row(
+            Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                  children: [
                   //google button
-                   SquareTile(imagePath: 'lib/images/2048px-Google__G__logo.svg.png'),
+                   SquareTile(
+                    onTap: () => AuthService().signInWithGoogle(),
+                    imagePath: 'lib/images/2048px-Google__G__logo.svg.png'),
 
-                   SizedBox(width: 20),
+                   const SizedBox(width: 20),
 
                    //apple button
-                SquareTile(imagePath: 'lib/images/Apple-Logo.png'),
+                SquareTile(
+                  onTap: () {},
+                  imagePath: 'lib/images/Apple-Logo.png'),
                  ],
                ),
             
