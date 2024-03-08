@@ -1,6 +1,6 @@
 # green
 
-A new Flutter project.
+This is an interactive flutter application.
 
 ## Getting Started
 
