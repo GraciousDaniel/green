@@ -43,39 +43,41 @@ class MyProfile extends StatelessWidget {
             //extract data
             Map<String, dynamic>? user = snapshot.data!.data();
 
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-
-                //profile pic
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24),
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+              
+                  //profile pic
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    padding: const EdgeInsets.all(25),
+                    child: const Icon(
+                      Icons.person,
+                      size: 64,
+                    ),
                   ),
-                  padding: const EdgeInsets.all(25),
-                  child: const Icon(
-                    Icons.person,
-                    size: 64,
+              
+                  const SizedBox(height: 25),
+              
+                  //username
+                  Text(user!['username'],
+                  style: const TextStyle(
+                    fontSize: 24,
+                     fontWeight: FontWeight.bold
+                     ),
                   ),
-                ),
-
-                const SizedBox(height: 25),
-
-                //username
-                Text(user!['username'],
-                style: const TextStyle(
-                  fontSize: 24,
-                   fontWeight: FontWeight.bold
-                   ),
-                ),
-
-                //email
-                Text(user['email'],
-                style: TextStyle(
-                  color: Colors.grey[600],
-                ),
-                ),
-              ],
+              
+                  //email
+                  Text(user['email'],
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                  ),
+                  ),
+                ],
+              ),
             );
           } 
           else {
