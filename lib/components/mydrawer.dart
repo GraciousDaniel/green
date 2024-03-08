@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:green/screens/homepage.dart';
 import 'package:green/screens/profilepage.dart';
@@ -5,8 +6,15 @@ import 'package:green/screens/projecthubpage.dart';
 import 'package:green/screens/resourcepage.dart';
 import 'package:green/screens/userspage.dart';
 
+//use get for routing to pop drawer
+
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
+
+    //sign out method
+  void signUserOut() {
+    FirebaseAuth.instance.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +55,7 @@ class MyDrawer extends StatelessWidget {
                           ),
                           onTap: () {
                             Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => const MyProfile()));
+                              MaterialPageRoute(builder: (context) => MyProfile()));
                           },
                       ),
                      ),
@@ -108,8 +116,7 @@ class MyDrawer extends StatelessWidget {
                           style: TextStyle(fontSize: 20),
                           ),
                           onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => const ResourcePage()));
+                            signUserOut();
                           },
                       ),
                     ),

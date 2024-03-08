@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:green/components/imagessquaretile.dart';
@@ -7,72 +8,86 @@ import 'package:green/services/auth_service.dart';
 
 class Signinpage extends StatefulWidget {
   final Function()? onTap;
-   const Signinpage({super.key, required this.onTap});
+  const Signinpage({Key? key, required this.onTap}) : super(key: key);
 
   @override
   State<Signinpage> createState() => _SigninpageState();
 }
 
 class _SigninpageState extends State<Signinpage> {
-  //text editing controllers
+  // text editing controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final usernameController = TextEditingController(); // added username controller
 
-  //sign user up method(to be refined)
+  // sign user up method (to be refined)
   void signUserUp() async {
-    //show loading circle(thinking)
-    //try signup
-    try{
-      //confirm password check
+    // show loading circle (thinking)
+    // try signup
+    try {
+      // confirm password check
       if (passwordController.text == confirmPasswordController.text) {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: emailController.text, 
-      password: passwordController.text
-      );
-      } else {
-        //show error message
-       // showErrorMessage('Passwords do not match');
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
 
+        // create a user document and add to firestore
+        createUserDocument(await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+                email: emailController.text, password: passwordController.text));
+      } else {
+        // show error message
+        // showErrorMessage('Passwords do not match');
       }
-      //pop loading circle(thinking)
+      // pop loading circle (thinking)
     } on FirebaseAuthException catch (e) {
-      //wrong email
+      // wrong email
       if (e.code == 'user-not-found') {
-        //show error to user
+        // show error to user
         wrongEmailMessage();
       }
-
-      //wrong password
+      // wrong password
       else if (e.code == 'wrong-password') {
-        //show error to user
+        // show error to user
         wrongPasswordMessage();
       }
     }
-
   }
 
-  //wrong email message pop up
-  void wrongEmailMessage () {
+  // wrong email message pop up
+  void wrongEmailMessage() {
     showDialog(
-      context: context, 
+      context: context,
       builder: (context) {
-      return const AlertDialog(
-        title: Text('Incorrect email'),
+        return const AlertDialog(
+          title: Text('Incorrect email'),
         );
-    },);
-    
+      },
+    );
   }
 
-  //wrong password message pop up
-  void wrongPasswordMessage () {
+  // wrong password message pop up
+  void wrongPasswordMessage() {
     showDialog(
-      context: context, 
+      context: context,
       builder: (context) {
-      return const AlertDialog(
-        title: Text('Incorrect password'),
+        return const AlertDialog(
+          title: Text('Incorrect password'),
         );
-    },);
+      },
+    );
+  }
+
+  // create a user document and store them in firestore
+  Future<void> createUserDocument(UserCredential? userCredential) async {
+    if (userCredential != null && userCredential.user != null) {
+      await FirebaseFirestore.instance.collection('Users').doc(userCredential.user!.email).set({
+        'email': userCredential.user!.email,
+        'username': usernameController.text,
+      });
+    }
   }
 
   @override
@@ -86,26 +101,24 @@ class _SigninpageState extends State<Signinpage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 25),
-                //logo
-                 Image.asset(
+                // logo
+                Image.asset(
                   'lib/images/DALL·E 2024-02-15 14.49.53 - A simple and clear image of green leaves forming the shape of the Earth. The design should be straightforward and easy to understand, with the leaves .webp',
                   height: 100,
                   width: 80,
-                  ),
-            
+                ),
+
                 const SizedBox(height: 17),
-            
-                //welcome text
+
+                // welcome text
                 const Text(
                   'Lets create an account',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black),
+                  style: TextStyle(fontSize: 18, color: Colors.black),
                 ),
-            
+
                 const SizedBox(height: 25),
-            
-                //email textfield
+
+                // email textfield
                 MyTextfield(
                   controller: emailController,
                   hintText: 'Email',
@@ -113,8 +126,17 @@ class _SigninpageState extends State<Signinpage> {
                 ),
 
                 const SizedBox(height: 10),
-                   
-                //password textfield
+
+                // username textfield
+                MyTextfield(
+                  controller: usernameController,
+                  hintText: 'Username',
+                  obscureText: false,
+                ),
+
+                const SizedBox(height: 10),
+
+                // password textfield
                 MyTextfield(
                   controller: passwordController,
                   hintText: 'Password',
@@ -123,13 +145,13 @@ class _SigninpageState extends State<Signinpage> {
 
                 const SizedBox(height: 10),
 
-                //confirm password
+                // confirm password
                 MyTextfield(
                   controller: confirmPasswordController,
                   hintText: 'Confirm Password',
                   obscureText: true,
                 ),
-            
+
                 const SizedBox(height: 25),
 
                 // button
@@ -137,11 +159,11 @@ class _SigninpageState extends State<Signinpage> {
                   text: 'Signup',
                   onTap: signUserUp,
                 ),
-            
+
                 const SizedBox(height: 50),
-                //register option
-                //continue with options
-                 Padding(
+                // register option
+                // continue with options
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
                     children: [
@@ -168,27 +190,28 @@ class _SigninpageState extends State<Signinpage> {
                   ),
                 ),
 
-            Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                 children: [
-                  //google button
-                   SquareTile(
-                    onTap: () => AuthService().signInWithGoogle(),
-                    imagePath: 'lib/images/2048px-Google__G__logo.svg.png'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // google button
+                    SquareTile(
+                      onTap: () => AuthService().signInWithGoogle(),
+                      imagePath: 'lib/images/2048px-Google__G__logo.svg.png',
+                    ),
 
-                   const SizedBox(width: 20),
+                    const SizedBox(width: 20),
 
-                   //apple button
-                SquareTile(
-                  onTap: () {},
-                  imagePath: 'lib/images/Apple-Logo.png'),
-                 ],
-               ),
-            
+                    // apple button
+                    SquareTile(
+                      onTap: () {},
+                      imagePath: 'lib/images/Apple-Logo.png',
+                    ),
+                  ],
+                ),
+
                 const SizedBox(height: 15),
-            
 
-                //okay register option
+                // okay register option
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -217,3 +240,5 @@ class _SigninpageState extends State<Signinpage> {
     );
   }
 }
+//add gpts loading circle
+// refine signin method with time
