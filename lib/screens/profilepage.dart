@@ -45,8 +45,9 @@ class MyProfile extends StatelessWidget {
 
             return Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  //upper spacing
+                  const SizedBox(height: 25),
               
                   //profile pic
                   Container(
@@ -56,7 +57,7 @@ class MyProfile extends StatelessWidget {
                     padding: const EdgeInsets.all(25),
                     child: const Icon(
                       Icons.person,
-                      size: 64,
+                      size: 58,
                     ),
                   ),
               

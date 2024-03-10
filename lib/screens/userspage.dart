@@ -38,18 +38,25 @@ class _MyUsersState extends State<MyUsers> {
           //get all users
           final users = snapshot.data!.docs;
 
-          return ListView.builder(
-            itemCount: users.length,
-            itemBuilder: (context, index) {
-              //get individual user
-              final user = users[index];
-
-              return  ListTile(
-                title: Text(user['username']),
-                subtitle: Text(user['email']),
-              );
-            },
-            );
+          return Column(
+            children: [
+              //list of app users
+              Expanded(
+                child: ListView.builder(
+                  itemCount: users.length,
+                  itemBuilder: (context, index) {
+                    //get individual user
+                    final user = users[index];
+                
+                    return  ListTile(
+                      title: Text(user['username']),
+                      subtitle: Text(user['email']),
+                    );
+                  },
+                  ),
+              ),
+            ],
+          );
         }
       ),
     );
