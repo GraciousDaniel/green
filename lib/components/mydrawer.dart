@@ -6,12 +6,10 @@ import 'package:green/screens/projecthubpage.dart';
 import 'package:green/screens/resourcepage.dart';
 import 'package:green/screens/userspage.dart';
 
-//use get for routing to pop drawer
-
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
 
-    //sign out method
+  // Sign out method
   void signUserOut() {
     FirebaseAuth.instance.signOut();
   }
@@ -19,110 +17,90 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      //backgroundColor: Theme.of(context).colorScheme.background,
-              child: Container(
+      child: Container(
+        color: Colors.white,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
                 color: Colors.green,
-                child: ListView(
-                  children: [
-                    const DrawerHeader(
-                      child: Center(
-                        child: Text('logo'),
-                      ),
-                    ),
-
-                    Padding(
-                      padding: const EdgeInsets.only(left:10.0),
-                      child: ListTile(
-                        leading: const Icon(Icons.home),
-                        title: const Text(
-                          'Home',
-                          style: TextStyle(fontSize: 20),
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => Homepage()));
-                          },
-                      ),
-                    ),
-
-                    Padding(
-                       padding: const EdgeInsets.only(left:10.0),
-                       child: ListTile(
-                        leading: const Icon(Icons.person),
-                        title: const Text(
-                          'Profile',
-                          style: TextStyle(fontSize: 20),
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => MyProfile()));
-                          },
-                      ),
-                     ),
-                    
-                    Padding(
-                      padding: const EdgeInsets.only(left:10.0),
-                      child: ListTile(
-                        leading: const Icon(Icons.people),
-                        title: const Text(
-                          'People',
-                          style: TextStyle(fontSize: 20),
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => const MyUsers()));
-                          },
-                      ),
-                    ),
-
-                    Padding(
-                      padding: const EdgeInsets.only(left:10.0),
-                      child: ListTile(
-                        leading: const Icon(Icons.water_drop),
-                        title: const Text(
-                          'Project Hub',
-                          style: TextStyle(fontSize: 20),
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => const ProjectPage()));
-                          },
-                      ),
-                    ),
-
-                    Padding(
-                      padding: const EdgeInsets.only(left:10.0),
-                      child: ListTile(
-                        leading: const Icon(Icons.psychology),
-                        title: const Text(
-                          'Resource Center',
-                          style: TextStyle(fontSize: 20),
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => const ResourcePage()));
-                          },
-                      ),
-                    ),
-
-                    const SizedBox(width: 70),
-
-                    Padding(
-                      padding: const EdgeInsets.only(left:10.0),
-                      child: ListTile(
-                        leading: const Icon(Icons.logout),
-                        title: const Text(
-                          'Logout',
-                          style: TextStyle(fontSize: 20),
-                          ),
-                          onTap: () {
-                            signUserOut();
-                          },
-                      ),
-                    ),
-                  ],
+              ),
+              child: Center(
+                child: Text(
+                  'Green',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-             );
+            ),
+            ListTile(
+              leading: const Icon(Icons.home, color: Colors.green),
+              title: const Text(
+                'Home',
+                style: TextStyle(fontSize: 18),
+              ),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Homepage()));
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.person, color: Colors.green),
+              title: const Text(
+                'Profile',
+                style: TextStyle(fontSize: 18),
+              ),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyProfile()));
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.people, color: Colors.green),
+              title: const Text(
+                'People',
+                style: TextStyle(fontSize: 18),
+              ),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MyUsers()));
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.water_drop, color: Colors.green),
+              title: const Text(
+                'Project Hub',
+                style: TextStyle(fontSize: 18),
+              ),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProjectPage()));
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.psychology, color: Colors.green),
+              title: const Text(
+                'Resource Center',
+                style: TextStyle(fontSize: 18),
+              ),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ResourcePage()));
+              },
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.green),
+              title: const Text(
+                'Logout',
+                style: TextStyle(fontSize: 18),
+              ),
+              onTap: () {
+                signUserOut();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -8,7 +8,7 @@ import 'package:green/screens/projecthubpage.dart';
 import 'package:green/screens/resourcepage.dart';
 import 'package:green/screens/splashscreen.dart';
 import 'package:green/screens/userspage.dart';
-import 'package:green/theme/darkmode.dart';
+//import 'package:green/theme/darkmode.dart';
 import 'package:green/theme/lightmode.dart';
 import 'firebase_options.dart';
 
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const Splashscreen(),
       theme: lightMode,
-      darkTheme: darkMode,
+      //darkTheme: darkMode,
       routes: {
         '/authentication page':(context) => const AuthPage(),
         '/login orregister page':(context) => const LoginOrRegisterPage(),

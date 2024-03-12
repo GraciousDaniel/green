@@ -3,91 +3,138 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MyProfile extends StatelessWidget {
-   MyProfile({super.key});
+  MyProfile({super.key});
 
-  //current logged in user
+  // Current logged-in user
   final User? currentUser = FirebaseAuth.instance.currentUser;
 
-  //future to fetch user details
+  // Future to fetch user details
   Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails() async {
-    return await FirebaseFirestore.instance
-    .collection('Users')
-    .doc(currentUser!.email)
-    .get();
+    return await FirebaseFirestore.instance.collection('Users').doc(currentUser!.email).get();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile',),
+        title: const Text('Profile'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () {
+              // Add functionality to navigate to the edit profile page
+            },
+          ),
+        ],
       ),
-      //backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       body: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
         future: getUserDetails(),
         builder: (context, snapshot) {
-          //loading...
-          if(snapshot.connectionState == ConnectionState.waiting) {
+          // Loading...
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
 
-          //error
+          // Error
           else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
+            );
           }
 
-          //data recieved
+          // Data received
           else if (snapshot.hasData) {
-            //extract data
+            // Extract data
             Map<String, dynamic>? user = snapshot.data!.data();
 
-            return Center(
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  //upper spacing
-                  const SizedBox(height: 25),
-              
-                  //profile pic
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    padding: const EdgeInsets.all(25),
+                  // Profile picture
+                  CircleAvatar(
+                    radius: 80,
+                    backgroundColor: Colors.grey[300],
                     child: const Icon(
                       Icons.person,
-                      size: 58,
+                      size: 100,
+                      color: Colors.grey,
                     ),
                   ),
-              
-                  const SizedBox(height: 25),
-              
-                  //username
-                  Text(user!['username'],
-                  style: const TextStyle(
-                    fontSize: 24,
-                     fontWeight: FontWeight.bold
-                     ),
+
+                  const SizedBox(height: 20),
+
+                  // Username
+                  Text(
+                    user!['username'],
+                    style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                   ),
-              
-                  //email
-                  Text(user['email'],
-                  style: TextStyle(
-                    color: Colors.grey[600],
+
+                  // Email
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Text(
+                      user['email'],
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 16,
+                      ),
+                    ),
                   ),
+
+                  const SizedBox(height: 20),
+
+                  // Bio
+                  Text(
+                    user['bio'] ?? 'No bio available',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // Additional details (you can customize this part based on your data model)
+                  ListTile(
+                    leading: const Icon(Icons.location_on),
+                    title: Text(user['location'] ?? 'Location not set'),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.calendar_today),
+                    title: Text(user['birthdate'] ?? 'Birthdate not set'),
+                  ),
+                  // Add more details as needed
+
+                  const SizedBox(height: 20),
+
+                  // Add more widgets or sections as needed
+
+                  // Edit Profile Button
+                  ElevatedButton(
+                    onPressed: () {
+                      // Add functionality to navigate to the edit profile page
+                    },
+                    child: const Text(
+                      'Edit Profile',
+                      style: TextStyle(color: Colors.black),),
                   ),
                 ],
               ),
             );
-          } 
-          else {
-            return const Text('No data');
+          } else {
+            return const Center(
+              child: Text('No data'),
+            );
           }
-          
         },
       ),
     );
   }
 }
+
 //continue to build ui with help from gpt.
