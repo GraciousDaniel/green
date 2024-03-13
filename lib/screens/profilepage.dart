@@ -159,5 +159,4 @@ class MyProfile extends StatelessWidget {
   }
 }
 
-
 //continue to build ui with help from gpt.

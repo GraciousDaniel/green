@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class MyUsers extends StatefulWidget {
-  const MyUsers({super.key});
+  const MyUsers({Key? key}) : super(key: key);
 
   @override
   State<MyUsers> createState() => _MyUsersState();
@@ -13,51 +13,60 @@ class _MyUsersState extends State<MyUsers> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 76, 175, 79),
         title: const Text('Users'),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('Users').snapshots(),
-        builder: (context, snapshot) {
-          //any errors
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          // Any errors
           if (snapshot.hasError) {
-            return const Text('Something went wrong');
-            //include error context
+            return const Center(
+              child: Text('Something went wrong'),
+            );
           }
 
-          //show loading circle
+          // Show loading indicator
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
 
-          if (snapshot.data == null) {
-            return const Text('No data');
+          // No data
+          if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
+            return const Center(
+              child: Text('No users found'),
+            );
           }
 
-          //get all users
-          final users = snapshot.data!.docs;
+          // Display users
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              // Get user data
+              final user = snapshot.data!.docs[index];
 
-          return Column(
-            children: [
-              //list of app users
-              Expanded(
-                child: ListView.builder(
-                  itemCount: users.length,
-                  itemBuilder: (context, index) {
-                    //get individual user
-                    final user = users[index];
-                
-                    return  ListTile(
-                      title: Text(user['username']),
-                      subtitle: Text(user['email']),
-                    );
-                  },
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                  elevation: 3,
+                  child: ListTile(
+                    title: Text(user['username']),
+                    subtitle: Text(user['email']),
+                    leading: const CircleAvatar(
+                      backgroundColor: Colors.green,
+                      child: Icon(Icons.person, color: Colors.white),
+                    ),
+                    onTap: () {
+                      // Add onTap action if needed
+                    },
                   ),
-              ),
-            ],
+                ),
+              );
+            },
           );
-        }
+        },
       ),
     );
   }

@@ -26,20 +26,43 @@ class _ResourcePageState extends State<ResourcePage> {
       body: ListView.builder(
         itemCount: resources.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(resources[index]),
-            onTap: () {
-              // Handle tapping on resource
-              // You can navigate to a detail page or open the resource directly
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('You tapped on: ${resources[index]}'),
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              elevation: 4,
+              child: InkWell(
+                onTap: () {
+                  // Handle tapping on resource
+                  // You can navigate to a detail page or open the resource directly
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('You tapped on: ${resources[index]}'),
+                    ),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.article_outlined, color: Colors.blue),
+
+                      const SizedBox(width: 16),
+                      
+                      Expanded(
+                        child: Text(
+                          resources[index],
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              );
-            },
+              ),
+            ),
           );
         },
       ),
     );
   }
 }
+
