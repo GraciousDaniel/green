@@ -20,6 +20,7 @@ class _ResourcePageState extends State<ResourcePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 76, 175, 79),
         title: const Text('Resource Center'),
       ),
       body: ListView.builder(

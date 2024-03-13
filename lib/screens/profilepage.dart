@@ -10,13 +10,17 @@ class MyProfile extends StatelessWidget {
 
   // Future to fetch user details
   Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails() async {
-    return await FirebaseFirestore.instance.collection('Users').doc(currentUser!.email).get();
+    return await FirebaseFirestore.instance
+    .collection('Users')
+    .doc(currentUser!.email)
+    .get();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 76, 175, 79),
         title: const Text('Profile'),
         actions: [
           IconButton(
@@ -88,27 +92,37 @@ class MyProfile extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   // Bio
-                  Text(
-                    user['bio'] ?? 'No bio available',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey[700],
+                  Card(
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        user['bio'] ?? 'No bio available',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey[700],
+                        ),
+                      ),
                     ),
                   ),
 
                   const SizedBox(height: 20),
 
                   // Additional details (you can customize this part based on your data model)
-                  ListTile(
-                    leading: const Icon(Icons.location_on),
-                    title: Text(user['location'] ?? 'Location not set'),
+                  Card(
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    child: Column(
+                      children: [
+                        buildDetailTile(Icons.location_on, user['location'] ?? 'Location not set'),
+                        const Divider(height: 0),
+                        buildDetailTile(Icons.calendar_today, user['birthdate'] ?? 'Birthdate not set'),
+                        // Add more details as needed
+                      ],
+                    ),
                   ),
-                  ListTile(
-                    leading: const Icon(Icons.calendar_today),
-                    title: Text(user['birthdate'] ?? 'Birthdate not set'),
-                  ),
-                  // Add more details as needed
 
                   const SizedBox(height: 20),
 
@@ -121,7 +135,8 @@ class MyProfile extends StatelessWidget {
                     },
                     child: const Text(
                       'Edit Profile',
-                      style: TextStyle(color: Colors.black),),
+                      style: TextStyle(color: Colors.black),
+                      ),
                   ),
                 ],
               ),
@@ -135,6 +150,14 @@ class MyProfile extends StatelessWidget {
       ),
     );
   }
+
+  ListTile buildDetailTile(IconData icon, String text) {
+    return ListTile(
+      leading: Icon(icon, color: Colors.grey),
+      title: Text(text, style: TextStyle(fontSize: 16, color: Colors.grey[700])),
+    );
+  }
 }
+
 
 //continue to build ui with help from gpt.

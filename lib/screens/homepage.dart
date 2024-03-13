@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:green/components/buttons/postbutton.dart';
 import 'package:green/components/mydrawer.dart';
@@ -26,7 +26,7 @@ class Homepage extends StatelessWidget {
    }
    
   //show current user
-  final user = FirebaseAuth.instance.currentUser!;
+  //final user = FirebaseAuth.instance.currentUser!;
 
   @override
   Widget build(BuildContext context) {

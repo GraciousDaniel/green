@@ -14,6 +14,7 @@ class _ProjectPageState extends State<ProjectPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 76, 175, 79),
         title: const Text('Project Hub'),
       ),
       body: Padding(
@@ -38,36 +39,48 @@ class _ProjectPageState extends State<ProjectPage> {
             // Animated Pie Chart
             Container(
               height: 200,
-              child: PieChart(
-                PieChartData(
-                  sections: [
-                    PieChartSectionData(
-                      color: Colors.green,
-                      title: 'Renewable Energy',
-                      value: 30,
-                    ),
-                    PieChartSectionData(
-                      color: Colors.blue,
-                      title: 'Tree Planting',
-                      value: 20,
-                    ),
-                    PieChartSectionData(
-                      color: Colors.orange,
-                      title: 'Waste Reduction',
-                      value: 25,
-                    ),
-                    PieChartSectionData(
-                      color: Colors.red,
-                      title: 'Transportation',
-                      value: 15,
-                    ),
-                    PieChartSectionData(
-                      color: Colors.purple,
-                      title: 'Other',
-                      value: 10,
-                    ),
-                  ],
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  //title of piechart
+                  const Text('PROJECTS'),
+              
+                  //piechart
+                  PieChart(
+                swapAnimationDuration: const Duration(milliseconds: 750),
+                swapAnimationCurve: Curves.easeInOutQuint,
+                //piechart
+                  PieChartData(
+                    sections: [
+                      PieChartSectionData(
+                        color: Colors.green,
+                        title: 'Renewable Energy',
+                        value: 30,
+                      ),
+                      PieChartSectionData(
+                        color: Colors.blue,
+                        title: 'Tree Planting',
+                        value: 20,
+                      ),
+                      PieChartSectionData(
+                        color: Colors.orange,
+                        title: 'Waste Reduction',
+                        value: 25,
+                      ),
+                      PieChartSectionData(
+                        color: Colors.red,
+                        title: 'Transportation',
+                        value: 15,
+                      ),
+                      PieChartSectionData(
+                        color: Colors.purple,
+                        title: 'Other',
+                        value: 10,
+                      ),
+                    ],
+                  ),
                 ),
+                ],
               ),
             ),
 
@@ -79,7 +92,7 @@ class _ProjectPageState extends State<ProjectPage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                   builder: (context) => ProjectDetailsPage(),
+                   builder: (context) => const ProjectDetailsPage(),
                 ),
               );
             },
