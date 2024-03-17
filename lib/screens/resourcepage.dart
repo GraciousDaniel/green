@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:green/screens/resourcematerials/article1.dart';
 
 class ResourcePage extends StatefulWidget {
   const ResourcePage({Key? key}) : super(key: key);
@@ -33,21 +34,29 @@ class _ResourcePageState extends State<ResourcePage> {
               child: InkWell(
                 onTap: () {
                   // Handle tapping on resource
-                  // You can navigate to a detail page or open the resource directly
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('You tapped on: ${resources[index]}'),
-                    ),
-                  );
+                  if (index == 0) {
+                    // Navigate to Article1 page if Article 1 is tapped
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Article1(),
+                      ),
+                    );
+                  } else {
+                    // Show a snackbar for other resources
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('You tapped on: ${resources[index]}'),
+                      ),
+                    );
+                  }
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
                     children: [
                       const Icon(Icons.article_outlined, color: Colors.blue),
-
                       const SizedBox(width: 16),
-                      
                       Expanded(
                         child: Text(
                           resources[index],
@@ -65,4 +74,3 @@ class _ResourcePageState extends State<ResourcePage> {
     );
   }
 }
-
