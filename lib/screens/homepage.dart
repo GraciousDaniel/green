@@ -98,14 +98,10 @@ class Homepage extends StatelessWidget {
                       Timestamp timestamp = post['Timestamp'];
                   
                       //return as list tile
-                      return Padding(
-                        padding: const EdgeInsets.only(left:25, right: 25),
-                        child: ListTile(
-                          title: Text(message),
-                          subtitle: Text(userEmail),
-                        ),
+                      return ListTile(
+                        title: Text(message),
+                        subtitle: Text(userEmail),
                       );
-                  
                     }
                     ),
                 );
